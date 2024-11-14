@@ -24,9 +24,9 @@ jobs:
                   ~/sfdx/bin/sfdx version
                   
         # Store secret for acc org
-            - name: 'Populate auth file with ACC_SFDX_URL secret'        
-              run: |
-              shell: bash
+            - name: 'Populate auth file with ACC_SFDX_URL secret'    
+             shell: bash
+              run: |             
                   echo ${{ secrets.ACC_SFDX_URL}} > ./ACC_SFDX_URL.txt
                   secretFileSize=$(wc -c "./ACC_SFDX_URL.txt" | awk '{print $1}')
                   if [ $secretFileSize == 1 ]; then
