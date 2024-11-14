@@ -3,7 +3,7 @@ name: Validate pull request
 on:
   pull_request:
     branches:
-      - PMD01
+      - main
     types: [opened, synchronize]
     paths:
       - 'force-app/**'
@@ -19,11 +19,10 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: 'Authenticate using ACC_SFDX_URL'
-        shell: bash
+      - name: 'Authenticate using SFDX_AUTH_URL'
         run: | 
-          echo ${{ secrets.ACC_SFDX_URL }} | sf org login sfdx-url -s -u
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
 
       - name: 'Validate'
         run: |
-          sf project deploy validate -d force-app/ -l RunLocalTests -w 30
+          sf project deploy validate -d force-app/ -l RunLocalTests -w 30          
