@@ -5,7 +5,8 @@ name: HandlePullRequesttoMaster
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request: 
-    branches: QA
+   branches:
+      - QA
      types: [opened, edited, reopened, synchronize]
    # Jobs to be executed
 jobs:
