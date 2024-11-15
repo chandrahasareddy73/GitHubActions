@@ -4,8 +4,9 @@ name: HandlePullRequesttoMaster
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  pull_request:
+  pull_request: 
     branches: QA
+     types: [opened, edited, reopened, synchronize]
    # Jobs to be executed
 jobs:
     pmd-run:
