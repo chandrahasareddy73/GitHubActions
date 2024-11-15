@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - QA
-    types: [opened, synchronize]
+    types: [opened, edited, reopened, synchronize]
     paths:
       - 'force-app/**'
 
