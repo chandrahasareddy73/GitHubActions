@@ -25,4 +25,4 @@ jobs:
 
       - name: 'Validate'
         run: |
-          sf project deploy validate -d force-app/ -1 NoTestRun -w 10         
+          sf project deploy validate -d force-app/ NoTestRun       
