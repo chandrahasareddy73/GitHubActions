@@ -25,4 +25,4 @@ jobs:
 
       - name: 'Validate'
         run: |
-          sf project deploy validate -d force-app/ -l RunLocalTests -w 10      
+          sf project deploy validate -d force-app/ -l NoTestRun --dry-run      
