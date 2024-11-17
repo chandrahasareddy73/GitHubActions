@@ -1,7 +1,7 @@
 @isTest
 public class Test_DevOps_Center_TestClass {
 static testMethod void validateSampleApex() {
-Account c = new Account(Name='BMW', DevOps_Center_Promote__c=10000);
+Account c = new Account(Name='BMW', DevOps_Center_Promote__c=100000);
  
 Test.startTest();
 insert c;
