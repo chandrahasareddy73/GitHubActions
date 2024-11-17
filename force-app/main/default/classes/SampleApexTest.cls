@@ -6,7 +6,8 @@ Account c = new Account(Name='BMW', DevOps_Center_Promote__c=100000);
 Test.startTest();
 insert c;
 Test.stopTest();
- 
+
+
 // Retrieve the record
 c = [SELECT DevOps_Center_Promote__c FROM Account WHERE Id =:c.Id];
  
