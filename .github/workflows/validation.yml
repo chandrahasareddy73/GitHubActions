@@ -26,4 +26,4 @@ jobs:
       - name: 'Validate'
         run: |
           sfdx force:source:deploy -c -p force-app -u     
-          
+
