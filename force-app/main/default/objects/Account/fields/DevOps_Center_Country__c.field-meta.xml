@@ -3,7 +3,7 @@
     <fullName>DevOps_Center_Country__c</fullName>
     <externalId>false</externalId>
     <label>DevOps Center Country</label>
-    <length>250</length>
+    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
