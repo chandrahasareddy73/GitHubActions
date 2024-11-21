@@ -39,8 +39,5 @@ jobs:
               
             # Deploy source to QA org
             - name: 'Push source to QA org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa -p force-app/main/default
-              
-               # Run Apex tests in scratch org
-            - name: 'Run Apex tests'
-              run: sf apex run test -l RunLocalTest -w 20
+              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa -p -l RunLocalTest --test-level force-app/main/default
+
