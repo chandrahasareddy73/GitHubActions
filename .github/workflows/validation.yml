@@ -9,12 +9,6 @@ on:
     types: [opened, edited, reopened, synchronize]
    # Jobs to be executed
 jobs:
-    deploy-acc:
-        runs-on: ubuntu-latest
-        steps:
-        # Checkout the source code
-            - name: 'Checkout source code'
-              uses: actions/checkout@v2
         # Install Salesforce CLI
             - name: 'Install Salesforce CLI'
               run: |
@@ -40,4 +34,4 @@ jobs:
               
             # Deploy source to Acc org
             - name: 'Push source to Acc org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa -c -p
+              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa -c -p force-app/main/default
