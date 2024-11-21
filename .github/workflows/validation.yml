@@ -10,7 +10,14 @@ on:
    # Jobs to be executed
 jobs:
 deploy-acc:
+         deploy-acc:
         runs-on: ubuntu-latest
+        steps:
+        # Checkout the source code
+            - name: 'Checkout source code'
+              uses: actions/checkout@v2
+              with:
+               fetch-depth: 0
         
         # Install Salesforce CLI
             - name: 'Install Salesforce CLI'
