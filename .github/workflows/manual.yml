@@ -5,7 +5,8 @@
 on:
  push:
  branches: [ main ]
- 
+ paths-ignore:
+ - '.github/**'
  name: Manual workflow
   workflow_dispatch:
     # Inputs the workflow accepts.
