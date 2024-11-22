@@ -37,4 +37,4 @@ jobs:
               
             # Deploy source to Acc org
             - name: 'Push source to Acc org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa -c -p force-app/main/default --testLevel RunLocalTests
+              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
