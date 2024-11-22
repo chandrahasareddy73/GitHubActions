@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: ValidateToQA
+name: ValidatetoPROD
 # Controls when the workflow will run
 on:
    workflow_dispatch:
    
 jobs:
-    deploy-QA:
+    deploy-PROD:
         runs-on: ubuntu-latest
         steps:
         # Checkout the source code
@@ -21,7 +21,7 @@ jobs:
                   echo "$HOME/sfdx/bin" >> $GITHUB_PATH
                   ~/sfdx/bin/sfdx version
                   
-        # Store secret for QA org
+        # Store secret for acc org
             - name: 'Populate auth file with SFDX_AUTH_URL secret'
               shell: bash
               run: |
@@ -31,10 +31,10 @@ jobs:
                       echo "Missing SFDX_AUTH_URL secret. Is this workflow running on a fork?";
                       exit 1;
                   fi
-            # Authenticate QA
-            - name: 'Authenticate QA'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -a QA -d
+            # Authenticate PROD
+            - name: 'Authenticate PROD'
+              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -a meeraacc -d
               
-            # Deploy source to QA org
-            - name: 'Push source to QA org'
+            # Deploy source to PROD org
+            - name: 'Push source to PROD org'
               run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
