@@ -1,10 +1,12 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
-
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+ push:
+ branches: [ main ]
+ 
+ name: Manual workflow
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -20,13 +22,21 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
+  validate-deployment:
     runs-on: ubuntu-latest
+    container:
+      image: salesforce/cli:latest-slim
+    steps:      
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 'Authenticate using SFDX_AUTH_URL'
+        shell: bash
+        run: | 
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url -s -u
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+      - name: 'Validate'
+        run: |
+          sf project deploy validate -d force-app/ -l RunLocalTests -w 30
