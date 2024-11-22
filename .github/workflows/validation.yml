@@ -3,11 +3,6 @@
 name: Validatetomain
 # Controls when the workflow will run
 on:
-   push:
-    branches:
-      - main
-   # Jobs to be executed
-   
    workflow_dispatch:
    
 jobs:
