@@ -8,4 +8,4 @@ CRM-XXX
 
 ### Apex Tests to Run
 
-Apex::[notests]::Apex
+Apex::[all]::Apex
