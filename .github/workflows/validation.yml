@@ -5,11 +5,11 @@ name: Validate PR on QA branch
 on:
     # The workflow will run whenever an event happens on a pull request
     pull_request:
-      # The events are that a PR is opened, or when a commit is pushed
+      # The events are that a PR is opened, edited, reopened or when a commit is pushed
       # to a branch that has an existing pull request
       types: [opened, edited, reopened, synchronize]
       # The branches filter allows to specify that this workflow should only
-      # run if the branch name is "develop". This way we prevent this workflow
+      # run if the branch name is "QA". This way we prevent this workflow
       # from running when PRs are opened on other branches
       branches: [ QA ]
       # We only care about changes to the force-app directory, which is the
@@ -115,7 +115,7 @@ jobs:
                 sudo apt install default-jdk
 
             # Prior to setting up this workflow, you have to create a Github Secret
-            # that contains the sfdx url of the integration/qa org.
+            # that contains the sfdx url of the qa org.
 
             # The steps to generate the url are here 
             # https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_auth_sfdxurl.htm
@@ -127,14 +127,14 @@ jobs:
 
             # The URL is stored in the Github Secret named SFDX_AUTH_URL
             # so here we store the URL into a text file
-            - name: 'Populate auth file with SFDX_URL secret of integration org'
+            - name: 'Populate auth file with SFDX_URL secret of QA org'
               shell: bash
               run: |
                   echo ${{ secrets.SFDX_AUTH_URL}} > ./SFDX_AUTH_URL.txt
 
             # Authenticate to org using the URL stored in the text file
             - name: 'Authenticate to QA Org'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -s -a integration
+              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -s -a QA
 
             # We use SFDX Git Delta to create a directory with only the metadata that has changed.
             # this allows us to deploy only those changes, as opposed to deploying the entire branch. 
@@ -148,6 +148,7 @@ jobs:
             # If the env variable does not equal 'all', we know that there is a list of
             # tests that can be run
 
+
             - name: 'Check-only deploy delta changes - run specified tests'
               if: ${{ env.APEX_TESTS != 'all' }}
               run: |
@@ -158,7 +159,7 @@ jobs:
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ env.APEX_TESTS == 'all' }}
               run: |
-                  sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunLocalTests  --json
+                  sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
 
             - name: 'Deploy destructive changes (if any)'
               run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
