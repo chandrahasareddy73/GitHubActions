@@ -4,14 +4,6 @@ name: ValidatetoPROD
 # Controls when the workflow will run
 on:
    workflow_dispatch:
-   inputs:
-     ValidateAgainstOrg:
-       description: 'Enter org to validate against'
-       required: true
-       type: choice
-       options:
-       - QA
-       - PROD
 jobs:
     deploy-PROD:
         runs-on: ubuntu-latest
