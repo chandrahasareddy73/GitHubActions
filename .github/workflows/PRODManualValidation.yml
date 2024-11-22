@@ -13,7 +13,7 @@ on:
        - QA
        - PROD
 jobs:
-    deploy-QA:
+    deploy-PROD:
         runs-on: ubuntu-latest
         steps:
         # Checkout the source code
@@ -60,7 +60,7 @@ on:
        - PROD
 
    jobs:
-    deploy-PROD:
+    deploy-QA:
         runs-on: ubuntu-latest
         steps:
         # Checkout the source code
@@ -85,10 +85,10 @@ on:
                       echo "Missing SFDX_PROD_URL secret. Is this workflow running on a fork?";
                       exit 1;
                   fi
-            # Authenticate PROD
-            - name: 'Authenticate PROD'
+            # Authenticate QA
+            - name: 'Authenticate QA'
               run: sfdx auth:sfdxurl:store -f ./SFDX_PROD_URL.txt -a meeraacc -d
               
-            # Deploy source to PROD org
-            - name: 'Push source to PROD org'
+            # Deploy source to QA org
+            - name: 'Push source to QA org'
               run: sfdx force:source:deploy -u pottennagari.chandra@salesforce.com --testlevel RunLocalTests -c -p force-app/main/default
