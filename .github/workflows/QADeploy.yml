@@ -1,16 +1,14 @@
 # Unique name for this workflow
-name: Validate PR on QA branch
+name: Deploy PR on QA branch
 
 # Definition when the workflow should run
 on:
     # The workflow will run whenever an event happens on a pull request
     push:
-      # The events are that a PR is opened, edited, reopened or when a commit is pushed
-      # to a branch that has an existing pull request
-      types: [opened, edited, reopened, synchronize]
+      # The events are that a PR is merged/pushed
       # The branches filter allows to specify that this workflow should only
       # run if the branch name is "QA". This way we prevent this workflow
-      # from running when PRs are opened on other branches
+      # from running when PRs are merged/pushed on other branches
       branches: [ QA ]
       # We only care about changes to the force-app directory, which is the
       # root directory of the sfdx project. This prevents the job from running
@@ -22,7 +20,7 @@ on:
 # Jobs to be executed when the above conditions are met
 jobs:
     # This is the name of the job. You can give it whatever name you want
-    validate-deployment-on-QA-org:
+    deployment-on-QA-org:
         # As mentioned in the blog post, this job runs inside a VM. Here we
         # can specify which OS this VM should run on. 
         # In this case, we are going to run our commands on the latest version
@@ -144,7 +142,7 @@ jobs:
                   mkdir changed-sources
                   sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/ 
 
-            # We do a check-only deploy and we only run the tests specified in the PR
+            # We do deploy and we only run the tests specified in the PR
             # If the env variable does not equal 'all', we know that there is a list of
             # tests that can be run
 
@@ -153,13 +151,13 @@ jobs:
               if: ${{ env.APEX_TESTS != 'All' }}
               run: |
                   echo ${{env.APEX_TESTS}}
-                  sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunSpecifiedTests --runtests ${{env.APEX_TESTS}} --json
+                  sfdx force:source:deploy -p "changed-sources/force-app" --testlevel RunSpecifiedTests --runtests ${{env.APEX_TESTS}} --json
              
               # If the env variable equals all, we run No tests
             - name: 'Check-only deploy delta changes - Run No Tests'
               if: ${{ env.APEX_TESTS == 'All' }}
               run: |
-                  sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
+                  sfdx force:source:deploy -p "changed-sources/force-app" --testlevel NoTestRun  --json
                        
             - name: 'Deploy destructive changes (if any)'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
+              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --ignorewarnings 
