@@ -1,13 +1,15 @@
 # This is a basic workflow to help you get started with Actions
 
-name: ValidatetoQA
+name: Validatetomain
 # Controls when the workflow will run
 on:
-   pull_request:
+   push:
     branches:
-      - QA
-    types: [opened, edited, reopened, synchronize]
+      - main
    # Jobs to be executed
+   
+   workflow_dispatch:
+   
 jobs:
     deploy-acc:
         runs-on: ubuntu-latest
