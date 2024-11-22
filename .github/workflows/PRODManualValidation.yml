@@ -46,18 +46,6 @@ jobs:
             - name: 'Push source to PROD org'
               run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
 
-name: ValidatetoQA
-# Controls when the workflow will run
-on:
-   workflow_dispatch:
-   inputs:
-     ValidateAgainstOrg:
-       description: 'Enter org to validate against'
-       required: true
-       type: choice
-       options:
-       - QA
-       - PROD
 
    jobs:
     deploy-QA:
