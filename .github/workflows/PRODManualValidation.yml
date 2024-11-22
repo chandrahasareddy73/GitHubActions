@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Validatetomain
+name: ValidatetoPROD
 # Controls when the workflow will run
 on:
    workflow_dispatch:
    
 jobs:
-    deploy-acc:
+    deploy-PROD:
         runs-on: ubuntu-latest
         steps:
         # Checkout the source code
@@ -31,10 +31,10 @@ jobs:
                       echo "Missing SFDX_AUTH_URL secret. Is this workflow running on a fork?";
                       exit 1;
                   fi
-            # Authenticate acc
-            - name: 'Authenticate Acc'
+            # Authenticate PROD
+            - name: 'Authenticate PROD'
               run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -a meeraacc -d
               
-            # Deploy source to Acc org
-            - name: 'Push source to Acc org'
+            # Deploy source to PROD org
+            - name: 'Push source to PROD org'
               run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
