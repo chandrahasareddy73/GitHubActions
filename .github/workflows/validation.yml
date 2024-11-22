@@ -150,15 +150,21 @@ jobs:
 
 
             - name: 'Check-only deploy delta changes - run specified tests'
-              if: ${{ env.APEX_TESTS != 'notests' }}
+              if: ${{ env.APEX_TESTS != 'All' }}
               run: |
                   echo ${{env.APEX_TESTS}}
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunSpecifiedTests --runtests ${{env.APEX_TESTS}} --json
-
+             
               # If the env variable equals all, we run All Local tests
             - name: 'Check-only deploy delta changes - Run Local Tests'
               if: ${{ env.APEX_TESTS == 'All' }}
               run: |
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunLocalTests  --json
+            
+                         
+               elif: ${{ env.APEX_TESTS == 'NoTests' }}
+               run: |
+                  sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
+           
             - name: 'Deploy destructive changes (if any)'
               run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
