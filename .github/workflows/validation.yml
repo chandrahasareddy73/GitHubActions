@@ -162,7 +162,7 @@ jobs:
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunLocalTests  --json
             
                          
-               elif: ${{ env.APEX_TESTS == 'NoTests' }}
+               else: ${{ env.APEX_TESTS == 'NoTests' }}
                run: |
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
            
