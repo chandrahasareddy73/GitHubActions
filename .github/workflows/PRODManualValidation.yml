@@ -37,4 +37,4 @@ jobs:
               
             # Deploy source to PROD org
             - name: 'Push source to PROD org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
+              run: sfdx force:source:deploy -u pottennagari.chandra@salesforce.com --testlevel RunLocalTests -c -p force-app/main/default
