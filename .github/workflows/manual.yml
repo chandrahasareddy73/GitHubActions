@@ -41,4 +41,4 @@ jobs:
               
             # Deploy source to QA org
             - name: 'Push source to QA org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
+              run: sfdx force:source:deploy -u pottennagari.chandra@salesforce.com --testlevel RunLocalTests -c -p force-app/main/default
