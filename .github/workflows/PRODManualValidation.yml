@@ -21,19 +21,19 @@ jobs:
                   ~/sfdx/bin/sfdx version
                   
         # Store secret for acc org
-            - name: 'Populate auth file with SFDX_AUTH_URL secret'
+            - name: 'Populate auth file with SFDX_PROD_URL secret'
               shell: bash
               run: |
-                  echo ${{ secrets.SFDX_AUTH_URL}} > ./SFDX_AUTH_URL.txt
-                  secretFileSize=$(wc -c "./SFDX_AUTH_URL.txt" | awk '{print $1}')
+                  echo ${{ secrets.SFDX_PROD_URL}} > ./SFDX_PROD_URL.txt
+                  secretFileSize=$(wc -c "./SFDX_PROD_URL.txt" | awk '{print $1}')
                   if [ $secretFileSize == 1 ]; then
-                      echo "Missing SFDX_AUTH_URL secret. Is this workflow running on a fork?";
+                      echo "Missing SFDX_PROD_URL secret. Is this workflow running on a fork?";
                       exit 1;
                   fi
             # Authenticate PROD
             - name: 'Authenticate PROD'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_AUTH_URL.txt -a meeraacc -d
+              run: sfdx auth:sfdxurl:store -f ./SFDX_PROD_URL.txt -a meeraacc -d
               
             # Deploy source to PROD org
             - name: 'Push source to PROD org'
-              run: sfdx force:source:deploy -u chandrahasapreddy@kpmg.com.devopqa --testlevel RunLocalTests -c -p force-app/main/default
+              run: sfdx force:source:deploy -u pottennagari.chandra@salesforce.com --testlevel RunLocalTests -c -p force-app/main/default
