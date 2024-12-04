@@ -161,16 +161,4 @@ jobs:
               run: |
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
                        
-            - name: Destructive Changes
-
-       run: |
-
-           echo "--- destructiveChanges.xml generated with deleted metadata ---"
-
-           cat destructiveChanges/destructiveChanges.xml
-
-           echo
-
-           echo "--- Deleting removed metadata ---"
-
-           sfdx force:mdapi:deploy -d destructiveChanges  -u ${{ secrets.SFDX_AUTH_URL}} -w -1
+            
