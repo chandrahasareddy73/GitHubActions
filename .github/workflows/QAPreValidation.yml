@@ -11,7 +11,7 @@ on:
       # The branches filter allows to specify that this workflow should only
       # run if the branch name is "QA". This way we prevent this workflow
       # from running when PRs are opened on other branches
-      branches: [ QA ]
+      branches: [ QA_Test01 ]
       # We only care about changes to the force-app directory, which is the
       # root directory of the sfdx project. This prevents the job from running
       # when changing non-salesforce files (like this yml file).
@@ -162,4 +162,6 @@ jobs:
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
                        
             - name: 'Deploy destructive changes (if any)'
+             if: ${{ env.APEX_TESTS == '' }}
+              run: |
               run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
