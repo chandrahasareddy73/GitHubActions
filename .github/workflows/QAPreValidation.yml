@@ -161,8 +161,4 @@ jobs:
               run: |
                   sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel NoTestRun  --json
                        
-            name: 'Deploy destructive changes (if any)'
-            elif: ${{ env.APEX_TESTS == '' }}
-              run: |
-              sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
-
+           
