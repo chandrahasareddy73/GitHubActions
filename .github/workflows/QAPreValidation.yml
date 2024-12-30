@@ -31,14 +31,9 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
             # Now we install nodejs in the VM, and specify version 14
-- name: Set up Node.js
-uses: actions/setup-node@v2
-with:
-node-version: '14' # Change to your desired Node.js version
-- name: Install dependencies
-run: npm install
-- name: Run Prettier
-run: npx prettier --check . #Check if files are formatted’.
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '14'
 
             # The idea is that the VM can access your remote repository
             # because your repository is an sfdx project.
@@ -56,7 +51,7 @@ run: npx prettier --check . #Check if files are formatted’.
               uses: actions/checkout@v3
               with:
                 fetch-depth: 0
-			  
+            
             # Now, we need a way to let the developer specify which tests to run, which
             # could be all tests or just the tests relevant to their deployment.
 
