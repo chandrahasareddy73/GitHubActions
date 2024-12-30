@@ -52,6 +52,13 @@ jobs:
               with:
                 fetch-depth: 0
             
+			- name: Install dependencies
+               run: npm install
+
+            - name: Run Prettier
+
+              run: npx prettier --check . #Check if files are formatted’.
+			  
             # Now, we need a way to let the developer specify which tests to run, which
             # could be all tests or just the tests relevant to their deployment.
 
