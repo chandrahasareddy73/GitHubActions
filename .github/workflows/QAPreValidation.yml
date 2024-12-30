@@ -30,11 +30,28 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
+		
+		      - name: 'Checkout source code'
+              uses: actions/checkout@v3
+              with:
+                ref: ${{ github.head_ref }}
+				
             # Now we install nodejs in the VM, and specify version 14
             - uses: actions/setup-node@v3
               with:
-                node-version: '14'
+                node-version: "16.x"
+				- run: npm ci
+				
+				- run: npm run format
+                - name: Commit changes
+				
+				
+				uses: stefanzweifel/git-auto-commit-action@v4
 
+            with:
+          commit_message: Apply formatting changes
+          branch: ${{ github.head_ref }}
+		  
             # The idea is that the VM can access your remote repository
             # because your repository is an sfdx project.
             # This is a default action that allows us to enter the root 
@@ -47,10 +64,7 @@ jobs:
             # changed between commits, so that we can only deploy that metadata
             # to the destination org
 
-            - name: 'Checkout source code'
-              uses: actions/checkout@v3
-              with:
-                fetch-depth: 0
+
             
             # Now, we need a way to let the developer specify which tests to run, which
             # could be all tests or just the tests relevant to their deployment.
