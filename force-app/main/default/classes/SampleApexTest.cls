@@ -8,10 +8,12 @@ insert c;
 Test.stopTest();
  
 // Retrieve the record
-c = [SELECT DevOps_Center_Promote__c FROM Account WHERE Id =:c.Id];
+c = [SELECT DevOps_Center_Promote__c FROM Account WHERE Id =:c.Id];              
  
 // Test that the trigger correctly updated the price
-System.assertEquals(81000, c.DevOps_Center_Promote__c);
+System.assertEquals(81000, c.DevOps_Center_Promote__c);         
+
+
 
 }
 }
